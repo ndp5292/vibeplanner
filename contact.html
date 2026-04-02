@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact – VibePlanner</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: '#FAFAF6', blush: '#F2E6F0', lavender: '#D9C8E8',
+            mauve: '#B896C8', sage: '#AECDBF', 'sage-dark': '#7DAF9A',
+            'text-main': '#2D2B2E', 'text-muted': '#7A7580',
+          },
+          fontFamily: {
+            sans: ['DM Sans', 'system-ui', 'sans-serif'],
+            display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    body { background-color: #FAFAF6; color: #2D2B2E; }
+    .font-display { letter-spacing: 0.01em; }
+    h1, h2, h3 { font-feature-settings: 'liga', 'kern'; }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #B896C8 20%, #7DAF9A 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .gradient-btn { background: linear-gradient(135deg, #B896C8, #9BB8D4); transition: opacity 0.2s ease; }
+    .gradient-btn:hover { opacity: 0.88; }
+    .nav-link { position: relative; }
+    .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1.5px; background: #B896C8; transition: width 0.25s ease; }
+    .nav-link:hover::after { width: 100%; }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(184,150,200,0.25);
+      border-color: #B896C8;
+    }
+    .info-card { transition: transform 0.2s ease; }
+    .info-card:hover { transform: translateY(-2px); }
+
+    .grad-border { position: relative; background: #fff; border-radius: 18px; }
+    .grad-border::before {
+      content: ''; position: absolute; inset: 0; border-radius: 18px; padding: 1.5px;
+      background: linear-gradient(135deg, #D9C8E8, #AECDBF);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+    }
+  </style>
+</head>
+
+<body class="font-sans">
+
+  <!-- ══ NAVBAR ══ -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-lavender/40">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2.5">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <defs><linearGradient id="nav-grad" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse"><stop stop-color="#C09CD6"/><stop offset="1" stop-color="#7DB8A4"/></linearGradient></defs>
+          <rect width="36" height="36" rx="9" fill="url(#nav-grad)" fill-opacity="0.13"/>
+          <path d="M9 10 C10.5 16 14 21.5 18 27" stroke="url(#nav-grad)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+          <path d="M27 10 C25.5 16 22 21.5 18 27" stroke="url(#nav-grad)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+          <circle cx="9"  cy="10" r="2.6" fill="#C09CD6"/>
+          <circle cx="27" cy="10" r="2.6" fill="#7DB8A4"/>
+          <path d="M13 31 Q18 33.5 23 31" stroke="url(#nav-grad)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        </svg>
+        <span class="font-display text-xl text-text-main tracking-tight">VibePlanner<span style="background:linear-gradient(135deg,#B896C8,#7DAF9A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">.</span></span>
+      </a>
+      <div class="flex items-center gap-4 md:gap-8 text-sm font-medium text-text-muted">
+        <a href="index.html"        class="nav-link hover:text-text-main transition-colors">Home</a>
+        <a href="about.html"        class="nav-link hover:text-text-main transition-colors">About</a>
+        <a href="how-it-works.html" class="nav-link hover:text-text-main transition-colors">How It Works</a>
+        <a href="contact.html"      class="nav-link text-mauve font-semibold">Contact</a>
+      </div>
+      <a href="contact.html" class="gradient-btn text-white text-sm font-medium px-5 py-2.5 rounded-full shadow-sm">Get Early Access</a>
+    </div>
+  </nav>
+
+  <!-- ══ PAGE HEADER ══ -->
+  <section class="pt-32 pb-16 px-6 text-center" style="background:linear-gradient(145deg,#DFF0E8,#EDE4F5);">
+    <p class="text-mauve text-sm font-semibold uppercase tracking-widest mb-3">Get In Touch</p>
+    <h1 class="font-display text-5xl md:text-6xl text-text-main mb-5">Let's <em class="gradient-text">Connect</em></h1>
+    <p class="text-text-muted text-lg max-w-xl mx-auto leading-relaxed">
+      Have a question, want to partner with us, or just want to say hi? We would love to hear from you.
+    </p>
+  </section>
+
+  <!-- ══ MAIN CONTENT ══ -->
+  <section class="py-20 px-6 bg-white">
+    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-14 items-start">
+
+      <!-- Left: Info -->
+      <div>
+        <h2 class="font-display text-3xl text-text-main mb-5">We Are <em class="gradient-text">Here for You</em></h2>
+        <p class="text-text-muted leading-relaxed mb-8">
+          Whether you are a young adult with a question, a vendor interested in joining our marketplace, or a press inquiry, we are happy to help. We typically respond within 24 hours.
+        </p>
+
+        <div class="space-y-4">
+          <div class="info-card flex items-start gap-4 bg-blush/40 rounded-2xl p-5 border border-lavender/30">
+            <div class="w-10 h-10 bg-lavender/50 rounded-xl flex items-center justify-center flex-shrink-0">
+              <i class="ph ph-envelope-simple" style="font-size:20px;color:#B896C8;"></i>
+            </div>
+            <div>
+              <div class="font-medium text-text-main text-sm mb-1">Email Us</div>
+              <a href="mailto:hello@vibeplanner.com" class="text-mauve text-sm hover:underline">hello@vibeplanner.com</a>
+              <p class="text-text-muted text-xs mt-1">We reply within 24 hours</p>
+            </div>
+          </div>
+
+          <div class="info-card flex items-start gap-4 bg-sage/20 rounded-2xl p-5 border border-sage/30">
+            <div class="w-10 h-10 bg-sage/50 rounded-xl flex items-center justify-center flex-shrink-0">
+              <i class="ph ph-chat-circle-text" style="font-size:20px;color:#7DAF9A;"></i>
+            </div>
+            <div>
+              <div class="font-medium text-text-main text-sm mb-1">General Inquiries</div>
+              <p class="text-text-muted text-sm">Questions about using VibePlanner for your event? Use the form on the right.</p>
+            </div>
+          </div>
+
+          <div class="info-card flex items-start gap-4 bg-blush/40 rounded-2xl p-5 border border-lavender/30">
+            <div class="w-10 h-10 bg-lavender/50 rounded-xl flex items-center justify-center flex-shrink-0">
+              <i class="ph ph-storefront" style="font-size:20px;color:#B896C8;"></i>
+            </div>
+            <div>
+              <div class="font-medium text-text-main text-sm mb-1">Vendor Partnerships</div>
+              <p class="text-text-muted text-sm">Interested in joining our vendor network? Select "Vendor Inquiry" in the form.</p>
+            </div>
+          </div>
+
+          <div class="info-card flex items-start gap-4 bg-sage/20 rounded-2xl p-5 border border-sage/30">
+            <div class="w-10 h-10 bg-sage/50 rounded-xl flex items-center justify-center flex-shrink-0">
+              <i class="ph ph-map-pin" style="font-size:20px;color:#7DAF9A;"></i>
+            </div>
+            <div>
+              <div class="font-medium text-text-main text-sm mb-1">Based At</div>
+              <p class="text-text-muted text-sm">Penn State University, University Park, PA</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8">
+          <p class="text-sm font-medium text-text-main mb-3">Follow Along</p>
+          <div class="flex gap-3">
+            <a href="#" class="w-10 h-10 bg-lavender/30 hover:bg-lavender/60 rounded-xl flex items-center justify-center transition-colors" title="Instagram">
+              <i class="ph ph-instagram-logo" style="font-size:18px;color:#B896C8;"></i>
+            </a>
+            <a href="#" class="w-10 h-10 bg-lavender/30 hover:bg-lavender/60 rounded-xl flex items-center justify-center transition-colors" title="TikTok">
+              <i class="ph ph-tiktok-logo" style="font-size:18px;color:#B896C8;"></i>
+            </a>
+            <a href="#" class="w-10 h-10 bg-lavender/30 hover:bg-lavender/60 rounded-xl flex items-center justify-center transition-colors" title="X">
+              <i class="ph ph-x-logo" style="font-size:18px;color:#B896C8;"></i>
+            </a>
+            <a href="#" class="w-10 h-10 bg-lavender/30 hover:bg-lavender/60 rounded-xl flex items-center justify-center transition-colors" title="LinkedIn">
+              <i class="ph ph-linkedin-logo" style="font-size:18px;color:#B896C8;"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div>
+        <form id="contactForm" onsubmit="handleContactSubmit(event)" class="grad-border p-8 shadow-sm">
+          <h3 class="font-display text-2xl text-text-main mb-6">Send Us a Message</h3>
+
+          <div class="mb-5">
+            <label class="block text-sm font-medium text-text-main mb-2">Your Name <span class="text-mauve">*</span></label>
+            <input type="text" id="contactName" placeholder="e.g. Nency Patel" required
+              class="w-full border border-lavender/60 rounded-xl px-4 py-3 text-sm text-text-main placeholder-text-muted/50 transition"/>
+          </div>
+
+          <div class="mb-5">
+            <label class="block text-sm font-medium text-text-main mb-2">Email Address <span class="text-mauve">*</span></label>
+            <input type="email" id="contactEmail" placeholder="e.g. you@email.com" required
+              class="w-full border border-lavender/60 rounded-xl px-4 py-3 text-sm text-text-main placeholder-text-muted/50 transition"/>
+          </div>
+
+          <div class="mb-5">
+            <label class="block text-sm font-medium text-text-main mb-2">Inquiry Type</label>
+            <select id="contactType"
+              class="w-full border border-lavender/60 rounded-xl px-4 py-3 text-sm text-text-main bg-white transition">
+              <option value="">Select an option...</option>
+              <option>General Question</option>
+              <option>Early Access / Waitlist</option>
+              <option>Vendor Inquiry</option>
+              <option>Press and Media</option>
+              <option>Campus Partnership</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="mb-7">
+            <label class="block text-sm font-medium text-text-main mb-2">Your Message <span class="text-mauve">*</span></label>
+            <textarea id="contactMessage" placeholder="Tell us what's on your mind..." rows="5" required
+              class="w-full border border-lavender/60 rounded-xl px-4 py-3 text-sm text-text-main placeholder-text-muted/50 resize-none transition"></textarea>
+          </div>
+
+          <button type="submit" class="gradient-btn w-full text-white font-semibold py-3.5 rounded-xl shadow-sm inline-flex items-center justify-center gap-2">
+            <i class="ph ph-paper-plane-tilt"></i> Send Message
+          </button>
+          <p class="text-text-muted text-xs text-center mt-4">We respect your privacy and never share your information.</p>
+        </form>
+
+        <div id="contactSuccess" class="hidden bg-white rounded-2xl p-10 border border-sage/40 shadow-sm text-center">
+          <div class="mb-5"><i class="ph ph-check-circle" style="font-size:52px;color:#7DAF9A;"></i></div>
+          <h3 class="font-display text-2xl text-text-main mb-3">Message Received!</h3>
+          <p class="text-text-muted leading-relaxed mb-2">
+            Thanks for reaching out, <span id="confirmedName" class="font-semibold text-text-main"></span>.
+          </p>
+          <p class="text-text-muted text-sm leading-relaxed">
+            We will get back to you at <span id="confirmedContactEmail" class="font-semibold text-mauve"></span> within 24 hours.
+          </p>
+          <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="how-it-works.html" class="gradient-btn text-white text-sm font-medium px-6 py-3 rounded-full shadow-sm">See How It Works</a>
+            <a href="index.html" class="bg-white border border-lavender text-text-main text-sm font-medium px-6 py-3 rounded-full hover:border-mauve transition-colors">Back to Home</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ WAITLIST CALLOUT ══ -->
+  <section class="py-16 px-6 text-center" style="background:linear-gradient(145deg,#EDE4F5,#DFF0E8);">
+    <div class="max-w-xl mx-auto">
+      <div class="mb-4"><i class="ph ph-sparkle" style="font-size:36px;color:#B896C8;"></i></div>
+      <h2 class="font-display text-3xl text-text-main mb-3">Don't Forget to <em class="gradient-text">Join the Waitlist</em></h2>
+      <p class="text-text-muted mb-7 text-sm leading-relaxed">Early access members get first access to premium features and exclusive event planning perks.</p>
+      <a href="index.html" class="gradient-btn text-white font-semibold px-8 py-4 rounded-full shadow-md inline-flex items-center gap-2">
+        <i class="ph ph-list-plus"></i> Join the Waitlist
+      </a>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="border-t border-lavender/30 py-12 px-6 text-center" style="background:#F8F3FC;">
+    <a href="index.html" class="inline-flex items-center gap-2.5 mb-5">
+      <svg width="30" height="30" viewBox="0 0 36 36" fill="none">
+        <defs><linearGradient id="foot-grad" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse"><stop stop-color="#C09CD6"/><stop offset="1" stop-color="#7DB8A4"/></linearGradient></defs>
+        <rect width="36" height="36" rx="9" fill="url(#foot-grad)" fill-opacity="0.13"/>
+        <path d="M9 10 C10.5 16 14 21.5 18 27" stroke="url(#foot-grad)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+        <path d="M27 10 C25.5 16 22 21.5 18 27" stroke="url(#foot-grad)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+        <circle cx="9"  cy="10" r="2.6" fill="#C09CD6"/>
+        <circle cx="27" cy="10" r="2.6" fill="#7DB8A4"/>
+        <path d="M13 31 Q18 33.5 23 31" stroke="url(#foot-grad)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+      </svg>
+      <span class="font-display text-lg text-text-main">VibePlanner<span style="background:linear-gradient(135deg,#B896C8,#7DAF9A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">.</span></span>
+    </a>
+    <div class="flex justify-center gap-6 text-sm text-text-muted mb-5">
+      <a href="index.html"        class="hover:text-mauve transition-colors">Home</a>
+      <a href="about.html"        class="hover:text-mauve transition-colors">About</a>
+      <a href="how-it-works.html" class="hover:text-mauve transition-colors">How It Works</a>
+      <a href="contact.html"      class="hover:text-mauve transition-colors">Contact</a>
+    </div>
+    <p class="text-text-muted text-xs">© 2026 VibePlanner. Crafted with care for young adults who love a great event.</p>
+  </footer>
+
+  <script>
+    function handleContactSubmit(e) {
+      e.preventDefault();
+      document.getElementById('confirmedName').textContent  = document.getElementById('contactName').value;
+      document.getElementById('confirmedContactEmail').textContent = document.getElementById('contactEmail').value;
+      document.getElementById('contactForm').classList.add('hidden');
+      document.getElementById('contactSuccess').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>

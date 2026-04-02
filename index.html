@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VibePlanner – Beautiful Events, Planned Effortlessly</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: '#FAFAF6', blush: '#F2E6F0', lavender: '#D9C8E8',
+            mauve: '#B896C8', sage: '#AECDBF', 'sage-dark': '#7DAF9A',
+            'text-main': '#2D2B2E', 'text-muted': '#7A7580',
+          },
+          fontFamily: {
+            sans: ['DM Sans', 'system-ui', 'sans-serif'],
+            display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    body { background-color: #FAFAF6; color: #2D2B2E; }
+    .font-display { letter-spacing: 0.01em; }
+    h1, h2, h3 { font-feature-settings: 'liga', 'kern'; }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #B896C8 20%, #7DAF9A 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .gradient-btn { background: linear-gradient(135deg, #B896C8, #9BB8D4); transition: opacity 0.2s ease; }
+    .gradient-btn:hover { opacity: 0.88; }
+
+    .nav-link { position: relative; }
+    .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1.5px; background: #B896C8; transition: width 0.25s ease; }
+    .nav-link:hover::after { width: 100%; }
+
+    /* Hero animated blobs */
+    @keyframes blob-float {
+      0%, 100% { transform: translate(0,0) scale(1); }
+      33%  { transform: translate(18px,-22px) scale(1.04); }
+      66%  { transform: translate(-14px,10px) scale(0.97); }
+    }
+    .blob { position: absolute; border-radius: 50%; filter: blur(70px); pointer-events: none; }
+    .blob-1 { width: 420px; height: 420px; background: rgba(216,196,232,0.50); top:-130px; right:-90px;  animation: blob-float 14s ease-in-out infinite; }
+    .blob-2 { width: 320px; height: 320px; background: rgba(174,205,191,0.40); bottom:-90px; left:-60px; animation: blob-float 11s ease-in-out infinite 4s; }
+    .blob-3 { width: 240px; height: 240px; background: rgba(242,230,240,0.55); top:42%; left:8%;        animation: blob-float 16s ease-in-out infinite 8s; }
+
+    /* Floating sparkles */
+    @keyframes spark-float {
+      0%,100% { transform: translateY(0) rotate(0deg); opacity: 0.45; }
+      50%      { transform: translateY(-15px) rotate(20deg); opacity: 0.80; }
+    }
+    .spark { position: absolute; pointer-events: none; animation: spark-float ease-in-out infinite; }
+
+    /* Cards */
+    .card-hover { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+    .card-hover:hover { transform: translateY(-5px); box-shadow: 0 18px 52px rgba(180,150,200,0.18); }
+
+    /* Gradient border */
+    .grad-border { position: relative; background: #fff; border-radius: 18px; }
+    .grad-border::before {
+      content: ''; position: absolute; inset: 0; border-radius: 18px; padding: 1.5px;
+      background: linear-gradient(135deg, #D9C8E8, #AECDBF);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+    }
+
+    /* Cursor blink */
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+
+    /* Vibe cards */
+    .vibe-card { transition: transform 0.28s ease, box-shadow 0.28s ease; }
+    .vibe-card:hover { transform: translateY(-7px) scale(1.01); box-shadow: 0 28px 64px rgba(0,0,0,0.12); }
+  </style>
+</head>
+
+<body class="font-sans">
+
+  <!-- ══ NAVBAR ══ -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-lavender/40">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2.5">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="nav-grad" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse"><stop stop-color="#C09CD6"/><stop offset="1" stop-color="#7DB8A4"/></linearGradient></defs>
+          <rect width="36" height="36" rx="9" fill="url(#nav-grad)" fill-opacity="0.13"/>
+          <path d="M9 10 C10.5 16 14 21.5 18 27" stroke="url(#nav-grad)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+          <path d="M27 10 C25.5 16 22 21.5 18 27" stroke="url(#nav-grad)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+          <circle cx="9"  cy="10" r="2.6" fill="#C09CD6"/>
+          <circle cx="27" cy="10" r="2.6" fill="#7DB8A4"/>
+          <path d="M13 31 Q18 33.5 23 31" stroke="url(#nav-grad)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        </svg>
+        <span class="font-display text-xl text-text-main tracking-tight">VibePlanner<span style="background:linear-gradient(135deg,#B896C8,#7DAF9A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">.</span></span>
+      </a>
+      <div class="flex items-center gap-4 md:gap-8 text-sm font-medium text-text-muted">
+        <a href="index.html"        class="nav-link text-mauve font-semibold">Home</a>
+        <a href="about.html"        class="nav-link hover:text-text-main transition-colors">About</a>
+        <a href="how-it-works.html" class="nav-link hover:text-text-main transition-colors">How It Works</a>
+        <a href="contact.html"      class="nav-link hover:text-text-main transition-colors">Contact</a>
+      </div>
+      <a href="contact.html" class="gradient-btn text-white text-sm font-medium px-5 py-2.5 rounded-full shadow-sm">Get Early Access</a>
+    </div>
+  </nav>
+
+  <!-- ══ HERO ══ -->
+  <section class="relative min-h-screen flex items-center justify-center text-center px-6 pt-28 pb-24 overflow-hidden"
+    style="background: linear-gradient(145deg,#F8F3FC 0%,#F2EBF8 30%,#EBF4EF 70%,#F5EBF2 100%);">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <i class="spark ph ph-sparkle"   style="top:17%;left:6%;   font-size:18px;color:#C09CD6;animation-duration:7s;"></i>
+    <i class="spark ph ph-star-four" style="top:28%;right:8%;  font-size:13px;color:#7DB8A4;animation-duration:9s; animation-delay:2s;"></i>
+    <i class="spark ph ph-sparkle"   style="bottom:30%;left:11%;font-size:14px;color:#7DB8A4;animation-duration:8s; animation-delay:4s;"></i>
+    <i class="spark ph ph-star-four" style="top:14%;right:22%; font-size:16px;color:#C09CD6;animation-duration:10s;animation-delay:1s;"></i>
+    <i class="spark ph ph-sparkle"   style="bottom:18%;right:7%;font-size:12px;color:#C09CD6;animation-duration:7.5s;animation-delay:3s;"></i>
+
+    <div class="relative z-10 max-w-3xl mx-auto">
+      <div class="inline-flex items-center gap-2 bg-white/70 border border-lavender text-mauve text-xs font-semibold px-4 py-1.5 rounded-full mb-8 shadow-sm backdrop-blur-sm">
+        <span class="w-1.5 h-1.5 bg-sage-dark rounded-full inline-block animate-pulse"></span>
+        AI-Powered Event Planning for Young Adults
+      </div>
+
+      <h1 class="font-display text-6xl md:text-7xl text-text-main leading-tight mb-6">
+        Plan your<br/>
+        <span class="gradient-text italic" id="typewriter-word">birthday.</span><span id="typewriter-cursor" style="display:inline-block;width:3px;height:0.85em;background:linear-gradient(135deg,#B896C8,#7DAF9A);margin-left:4px;border-radius:2px;vertical-align:middle;animation:blink 0.9s step-end infinite;"></span>
+      </h1>
+
+      <p class="text-text-muted text-lg md:text-xl leading-relaxed mb-10 max-w-2xl mx-auto">
+        VibePlanner generates your complete event plan, connects you with verified local vendors in real time, and creates everything from invitations to layouts. All personalized to your vision and budget.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="contact.html" class="gradient-btn text-white font-semibold px-8 py-4 rounded-full shadow-lg text-base inline-flex items-center justify-center gap-2">
+          <i class="ph ph-sparkle"></i> Start Planning Free
+        </a>
+        <a href="how-it-works.html" class="bg-white/80 backdrop-blur-sm text-text-main font-semibold px-8 py-4 rounded-full shadow-sm border border-lavender hover:border-mauve transition-colors text-base">
+          See How It Works →
+        </a>
+      </div>
+
+      <p class="mt-10 text-text-muted text-sm">
+        Trusted by <span class="font-semibold text-mauve">500+ young adults</span> planning their best events yet.
+      </p>
+    </div>
+
+    <div class="absolute bottom-0 left-0 right-0 pointer-events-none">
+      <svg viewBox="0 0 1440 54" fill="none" preserveAspectRatio="none" style="display:block;width:100%;height:54px;">
+        <path d="M0 27 C480 54 960 0 1440 27 L1440 54 L0 54 Z" fill="#ffffff"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ══ FEATURES ══ -->
+  <section class="py-24 px-6 bg-white">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-14">
+        <p class="text-mauve text-sm font-semibold uppercase tracking-widest mb-3">What We Offer</p>
+        <h2 class="font-display text-4xl md:text-5xl text-text-main">Everything You Need to Host <em class="gradient-text">Without the Stress.</em></h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-7">
+        <div class="card-hover grad-border p-8">
+          <div class="w-12 h-12 bg-lavender/50 rounded-xl flex items-center justify-center mb-5"><i class="ph ph-magic-wand" style="font-size:22px;color:#B896C8;"></i></div>
+          <h3 class="font-semibold text-lg text-text-main mb-3">AI Event Planner</h3>
+          <p class="text-text-muted text-sm leading-relaxed">Input your event type, budget, and vibe. Get a full personalized plan with themes, layouts, and a complete budget breakdown in seconds.</p>
+        </div>
+
+        <div class="card-hover grad-border p-8" style="background:linear-gradient(135deg,#F9F5FD,#F0F7F4);">
+          <div class="w-12 h-12 bg-sage/40 rounded-xl flex items-center justify-center mb-5"><i class="ph ph-graph" style="font-size:22px;color:#7DAF9A;"></i></div>
+          <h3 class="font-semibold text-lg text-text-main mb-3">Live Vendor Matching</h3>
+          <p class="text-text-muted text-sm leading-relaxed">Our real-time matching engine connects you with verified local vendors based on your budget, availability, and aesthetic. Instantly.</p>
+        </div>
+
+        <div class="card-hover grad-border p-8">
+          <div class="w-12 h-12 bg-lavender/50 rounded-xl flex items-center justify-center mb-5"><i class="ph ph-paint-brush" style="font-size:22px;color:#B896C8;"></i></div>
+          <h3 class="font-semibold text-lg text-text-main mb-3">AI-Generated Content</h3>
+          <p class="text-text-muted text-sm leading-relaxed">Get stunning invitations, social media captions, and event posters. All on-brand, personalized, and ready to share in one click.</p>
+        </div>
+
+        <div class="card-hover grad-border p-8" style="background:linear-gradient(135deg,#F0F7F4,#F9F5FD);">
+          <div class="w-12 h-12 bg-sage/40 rounded-xl flex items-center justify-center mb-5"><i class="ph ph-eye" style="font-size:22px;color:#7DAF9A;"></i></div>
+          <h3 class="font-semibold text-lg text-text-main mb-3">Event Preview</h3>
+          <p class="text-text-muted text-sm leading-relaxed">Visualize your event before the big day. See your layout, décor, and full atmosphere come to life in our immersive preview feature.</p>
+        </div>
+
+        <div class="card-hover grad-border p-8">
+          <div class="w-12 h-12 bg-lavender/50 rounded-xl flex items-center justify-center mb-5"><i class="ph ph-wallet" style="font-size:22px;color:#B896C8;"></i></div>
+          <h3 class="font-semibold text-lg text-text-main mb-3">Smart Budget Tools</h3>
+          <p class="text-text-muted text-sm leading-relaxed">Track every expense with an automated budget breakdown that keeps you firmly on track, no spreadsheet required.</p>
+        </div>
+
+        <div class="card-hover grad-border p-8" style="background:linear-gradient(135deg,#F9F5FD,#F0F7F4);">
+          <div class="w-12 h-12 bg-sage/40 rounded-xl flex items-center justify-center mb-5"><i class="ph ph-seal-check" style="font-size:22px;color:#7DAF9A;"></i></div>
+          <h3 class="font-semibold text-lg text-text-main mb-3">Verified Vendor Network</h3>
+          <p class="text-text-muted text-sm leading-relaxed">Every vendor is verified, reviewed, and priced for real-life budgets. No more scrolling through unreliable listings.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ VIBE SHOWCASE ══ -->
+  <section class="py-20 px-6 relative overflow-hidden" style="background:linear-gradient(145deg,#EDE4F5 0%,#E4F0E8 100%);">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12">
+        <p class="text-mauve text-sm font-semibold uppercase tracking-widest mb-3">Explore Your Aesthetic</p>
+        <h2 class="font-display text-4xl md:text-5xl text-text-main">Every Vibe, <em class="gradient-text">Planned Perfectly.</em></h2>
+        <p class="text-text-muted mt-4 max-w-xl mx-auto text-sm leading-relaxed">Tell us your aesthetic and we build everything around it. Here are just a few of the styles our platform specializes in.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="vibe-card rounded-2xl overflow-hidden border border-white/60 shadow-sm" style="background:linear-gradient(150deg,#D5EDDF 0%,#B4D9CA 100%);">
+          <div class="p-8">
+            <div class="w-11 h-11 bg-white/50 rounded-xl flex items-center justify-center mb-5 backdrop-blur-sm">
+              <i class="ph ph-flower" style="font-size:22px;color:#4A9A7E;"></i>
+            </div>
+            <h3 class="font-display text-2xl text-text-main mb-2">Garden Luxe</h3>
+            <p class="text-text-muted text-sm leading-relaxed mb-5">Lush florals, natural textures, and an open-air atmosphere that feels intimate and elevated at the same time.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="bg-white/50 text-text-muted text-xs px-2.5 py-1 rounded-full font-medium">Outdoor</span>
+              <span class="bg-white/50 text-text-muted text-xs px-2.5 py-1 rounded-full font-medium">Spring</span>
+              <span class="bg-white/50 text-text-muted text-xs px-2.5 py-1 rounded-full font-medium">Romantic</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="vibe-card rounded-2xl overflow-hidden border border-white/60 shadow-sm" style="background:linear-gradient(150deg,#ECE2F5 0%,#D6C5E8 100%);">
+          <div class="p-8">
+            <div class="w-11 h-11 bg-white/50 rounded-xl flex items-center justify-center mb-5 backdrop-blur-sm">
+              <i class="ph ph-sparkle" style="font-size:22px;color:#8A5EAA;"></i>
+            </div>
+            <h3 class="font-display text-2xl text-text-main mb-2">Minimal Chic</h3>
+            <p class="text-text-muted text-sm leading-relaxed mb-5">Clean lines, soft palettes, and thoughtful details that make sophistication look completely effortless.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="bg-white/50 text-text-muted text-xs px-2.5 py-1 rounded-full font-medium">Indoor</span>
+              <span class="bg-white/50 text-text-muted text-xs px-2.5 py-1 rounded-full font-medium">Year-Round</span>
+              <span class="bg-white/50 text-text-muted text-xs px-2.5 py-1 rounded-full font-medium">Modern</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="vibe-card rounded-2xl overflow-hidden border border-white/60 shadow-sm" style="background:linear-gradient(150deg,#F5E8D5 0%,#E8CAAA 100%);">
+          <div class="p-8">
+            <div class="w-11 h-11 bg-white/50 rounded-xl flex items-center justify-center mb-5 backdrop-blur-sm">
+              <i class="ph ph-crown" style="font-size:22px;color:#A87030;"></i>
+            </div>
+            <h3 class="font-display text-2xl text-text-main mb-2">Urban Luxe</h3>
+            <p class="text-text-muted text-sm leading-relaxed mb-5">Rooftop sunsets, warm candlelight, and upscale details that transform any city space into a true statement.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="bg-white/50 text-text-muted text-xs px-2.5 py-1 rounded-full font-medium">Rooftop</span>
+              <span class="bg-white/50 text-text-muted text-xs px-2.5 py-1 rounded-full font-medium">Evening</span>
+              <span class="bg-white/50 text-text-muted text-xs px-2.5 py-1 rounded-full font-medium">Upscale</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ EMAIL CAPTURE ══ -->
+  <section class="py-24 px-6 bg-white">
+    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
+
+      <div>
+        <p class="text-mauve text-sm font-semibold uppercase tracking-widest mb-3">Join the Waitlist</p>
+        <h2 class="font-display text-4xl md:text-5xl text-text-main mb-5">Be First to Plan <em class="gradient-text">Smarter.</em></h2>
+        <p class="text-text-muted leading-relaxed mb-8">Drop your name and email and we will notify you the moment VibePlanner goes live. Early access members get exclusive perks and priority vendor matching.</p>
+
+        <div class="space-y-4">
+          <div class="flex items-center gap-3 text-sm text-text-muted">
+            <div class="w-5 h-5 rounded-full bg-sage/40 flex items-center justify-center flex-shrink-0"><i class="ph ph-check" style="font-size:11px;color:#7DAF9A;"></i></div>
+            Priority access to the full platform at launch
+          </div>
+          <div class="flex items-center gap-3 text-sm text-text-muted">
+            <div class="w-5 h-5 rounded-full bg-sage/40 flex items-center justify-center flex-shrink-0"><i class="ph ph-check" style="font-size:11px;color:#7DAF9A;"></i></div>
+            Your first event plan, completely free
+          </div>
+          <div class="flex items-center gap-3 text-sm text-text-muted">
+            <div class="w-5 h-5 rounded-full bg-sage/40 flex items-center justify-center flex-shrink-0"><i class="ph ph-check" style="font-size:11px;color:#7DAF9A;"></i></div>
+            Exclusive early-bird pricing, locked in forever
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <form id="signupForm" onsubmit="handleSubmit(event)" class="grad-border p-8 shadow-sm">
+          <h3 class="font-display text-2xl text-text-main mb-6">Secure Your Spot</h3>
+          <div class="mb-5">
+            <label class="block text-sm font-medium text-text-main mb-2">Your Name</label>
+            <input type="text" id="nameInput" placeholder="e.g. Nency Patel" required
+              class="w-full border border-lavender/60 rounded-xl px-4 py-3 text-sm text-text-main placeholder-text-muted/50 focus:outline-none focus:ring-2 focus:ring-mauve/40 transition"/>
+          </div>
+          <div class="mb-7">
+            <label class="block text-sm font-medium text-text-main mb-2">Email Address</label>
+            <input type="email" id="emailInput" placeholder="e.g. you@email.com" required
+              class="w-full border border-lavender/60 rounded-xl px-4 py-3 text-sm text-text-main placeholder-text-muted/50 focus:outline-none focus:ring-2 focus:ring-mauve/40 transition"/>
+          </div>
+          <button type="submit" class="gradient-btn w-full text-white font-semibold py-3.5 rounded-xl shadow-sm inline-flex items-center justify-center gap-2">
+            <i class="ph ph-sparkle"></i> Join the Waitlist
+          </button>
+          <p class="text-text-muted text-xs text-center mt-4">No spam, ever. Unsubscribe at any time.</p>
+        </form>
+
+        <div id="successMessage" class="hidden bg-white rounded-2xl p-10 shadow-sm border border-sage/40 text-center">
+          <div class="mb-4"><i class="ph ph-check-circle" style="font-size:52px;color:#7DAF9A;"></i></div>
+          <h3 class="font-display text-2xl text-text-main mb-2">You're on the list!</h3>
+          <p class="text-text-muted text-sm leading-relaxed">Thanks for joining. We will reach out to <span id="confirmedEmail" class="font-semibold text-mauve"></span> as soon as we launch. Get ready to plan something beautiful.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="border-t border-lavender/30 py-12 px-6 text-center" style="background:#F8F3FC;">
+    <a href="index.html" class="inline-flex items-center gap-2.5 mb-5">
+      <svg width="30" height="30" viewBox="0 0 36 36" fill="none">
+        <defs><linearGradient id="foot-grad" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse"><stop stop-color="#C09CD6"/><stop offset="1" stop-color="#7DB8A4"/></linearGradient></defs>
+        <rect width="36" height="36" rx="9" fill="url(#foot-grad)" fill-opacity="0.13"/>
+        <path d="M9 10 C10.5 16 14 21.5 18 27" stroke="url(#foot-grad)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+        <path d="M27 10 C25.5 16 22 21.5 18 27" stroke="url(#foot-grad)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+        <circle cx="9"  cy="10" r="2.6" fill="#C09CD6"/>
+        <circle cx="27" cy="10" r="2.6" fill="#7DB8A4"/>
+        <path d="M13 31 Q18 33.5 23 31" stroke="url(#foot-grad)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+      </svg>
+      <span class="font-display text-lg text-text-main">VibePlanner<span style="background:linear-gradient(135deg,#B896C8,#7DAF9A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">.</span></span>
+    </a>
+    <div class="flex justify-center gap-6 text-sm text-text-muted mb-5">
+      <a href="index.html"        class="hover:text-mauve transition-colors">Home</a>
+      <a href="about.html"        class="hover:text-mauve transition-colors">About</a>
+      <a href="how-it-works.html" class="hover:text-mauve transition-colors">How It Works</a>
+      <a href="contact.html"      class="hover:text-mauve transition-colors">Contact</a>
+    </div>
+    <p class="text-text-muted text-xs">© 2026 VibePlanner. Crafted with care for young adults who love a great event.</p>
+  </footer>
+
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      document.getElementById('confirmedEmail').textContent = document.getElementById('emailInput').value;
+      document.getElementById('signupForm').classList.add('hidden');
+      document.getElementById('successMessage').classList.remove('hidden');
+    }
+
+    /* ── Typewriter ── */
+    const words   = ['birthday.', 'graduation.', 'dinner party.', 'anniversary.', 'brunch.', 'housewarming.', 'celebration.'];
+    const el      = document.getElementById('typewriter-word');
+    const cursor  = document.getElementById('typewriter-cursor');
+    let   wi = 0, ci = 0, deleting = false;
+
+    function type() {
+      const word    = words[wi];
+      const current = deleting ? word.slice(0, ci--) : word.slice(0, ci++);
+      el.textContent = current;
+
+      let delay = deleting ? 60 : 110;
+
+      if (!deleting && ci > word.length) {
+        delay    = 1800;            // pause before deleting
+        deleting = true;
+      } else if (deleting && ci < 0) {
+        deleting = false;
+        ci       = 0;
+        wi       = (wi + 1) % words.length;
+        delay    = 400;             // pause before next word
+      }
+      setTimeout(type, delay);
+    }
+    setTimeout(type, 800);
+  </script>
+</body>
+</html>

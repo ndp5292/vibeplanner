@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About – VibePlanner</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: '#FAFAF6', blush: '#F2E6F0', lavender: '#D9C8E8',
+            mauve: '#B896C8', sage: '#AECDBF', 'sage-dark': '#7DAF9A',
+            'text-main': '#2D2B2E', 'text-muted': '#7A7580',
+          },
+          fontFamily: {
+            sans: ['DM Sans', 'system-ui', 'sans-serif'],
+            display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    body { background-color: #FAFAF6; color: #2D2B2E; }
+    .font-display { letter-spacing: 0.01em; }
+    h1, h2, h3 { font-feature-settings: 'liga', 'kern'; }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #B896C8 20%, #7DAF9A 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .gradient-btn { background: linear-gradient(135deg, #B896C8, #9BB8D4); transition: opacity 0.2s ease; }
+    .gradient-btn:hover { opacity: 0.88; }
+    .nav-link { position: relative; }
+    .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1.5px; background: #B896C8; transition: width 0.25s ease; }
+    .nav-link:hover::after { width: 100%; }
+
+    .photo-placeholder {
+      background: linear-gradient(135deg, #EDE4F5, #DFF0E8);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      border: 2px dashed #D9C8E8; border-radius: 16px;
+    }
+    .stat-card { transition: transform 0.2s ease; }
+    .stat-card:hover { transform: translateY(-3px); }
+    .value-card { transition: transform 0.2s ease; }
+    .value-card:hover { transform: translateY(-3px); }
+
+    /* ── Founder photo styles ── */
+    .founder-photo-wrap {
+      position: relative;
+      display: inline-block;
+    }
+    .founder-photo-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 26px;
+      background: linear-gradient(145deg, #D9C8E8 0%, #AECDBF 100%);
+      z-index: 0;
+      opacity: 0.55;
+    }
+    .founder-photo-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: -14px; right: -14px;
+      width: 100%; height: 100%;
+      border-radius: 22px;
+      border: 2px solid #D9C8E8;
+      z-index: -1;
+    }
+    .founder-photo-wrap img {
+      position: relative; z-index: 1;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(185,150,200,0.22), 0 4px 16px rgba(0,0,0,0.08);
+      display: block;
+    }
+
+    .pull-quote-card {
+      background: linear-gradient(145deg, #F2E6F0, #E8F3ED);
+      border-radius: 22px;
+      border-left: 4px solid;
+      border-image: linear-gradient(180deg, #B896C8, #7DAF9A) 1;
+    }
+    .lifestyle-photo-card {
+      position: relative; overflow: hidden; border-radius: 20px;
+      box-shadow: 0 12px 40px rgba(185,150,200,0.18);
+    }
+    .lifestyle-photo-card img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .lifestyle-photo-card .overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(45,43,46,0.45) 0%, transparent 55%);
+    }
+    .lifestyle-photo-card .caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 24px 20px 20px;
+      color: white;
+    }
+
+    .grad-border { position: relative; background: #fff; border-radius: 18px; }
+    .grad-border::before {
+      content: ''; position: absolute; inset: 0; border-radius: 18px; padding: 1.5px;
+      background: linear-gradient(135deg, #D9C8E8, #AECDBF);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+    }
+  </style>
+</head>
+
+<body class="font-sans">
+
+  <!-- ══ NAVBAR ══ -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-lavender/40">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2.5">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <defs><linearGradient id="nav-grad" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse"><stop stop-color="#C09CD6"/><stop offset="1" stop-color="#7DB8A4"/></linearGradient></defs>
+          <rect width="36" height="36" rx="9" fill="url(#nav-grad)" fill-opacity="0.13"/>
+          <path d="M9 10 C10.5 16 14 21.5 18 27" stroke="url(#nav-grad)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+          <path d="M27 10 C25.5 16 22 21.5 18 27" stroke="url(#nav-grad)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+          <circle cx="9"  cy="10" r="2.6" fill="#C09CD6"/>
+          <circle cx="27" cy="10" r="2.6" fill="#7DB8A4"/>
+          <path d="M13 31 Q18 33.5 23 31" stroke="url(#nav-grad)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        </svg>
+        <span class="font-display text-xl text-text-main tracking-tight">VibePlanner<span style="background:linear-gradient(135deg,#B896C8,#7DAF9A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">.</span></span>
+      </a>
+      <div class="flex items-center gap-4 md:gap-8 text-sm font-medium text-text-muted">
+        <a href="index.html"        class="nav-link hover:text-text-main transition-colors">Home</a>
+        <a href="about.html"        class="nav-link text-mauve font-semibold">About</a>
+        <a href="how-it-works.html" class="nav-link hover:text-text-main transition-colors">How It Works</a>
+        <a href="contact.html"      class="nav-link hover:text-text-main transition-colors">Contact</a>
+      </div>
+      <a href="contact.html" class="gradient-btn text-white text-sm font-medium px-5 py-2.5 rounded-full shadow-sm">Get Early Access</a>
+    </div>
+  </nav>
+
+  <!-- ══ PAGE HEADER ══ -->
+  <section class="pt-32 pb-16 px-6 text-center" style="background:linear-gradient(145deg,#F8F3FC,#EDF5F0);">
+    <p class="text-mauve text-sm font-semibold uppercase tracking-widest mb-3">Our Story</p>
+    <h1 class="font-display text-5xl md:text-6xl text-text-main mb-5">About <em class="gradient-text">VibePlanner</em></h1>
+    <p class="text-text-muted text-lg max-w-2xl mx-auto leading-relaxed">
+      Born from the frustration of planning a milestone event with no vendor connections and no idea where to start. We built the tool we wished we had.
+    </p>
+  </section>
+
+  <!-- ══ MISSION ══ -->
+  <section class="py-20 px-6 bg-white">
+    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
+      <div>
+        <p class="text-mauve text-sm font-semibold uppercase tracking-widest mb-3">Our Mission</p>
+        <h2 class="font-display text-4xl text-text-main mb-6">Making Aesthetic Events <em class="gradient-text">Accessible</em> for Every Young Host</h2>
+        <p class="text-text-muted leading-relaxed mb-5">
+          VibePlanner exists because beautiful, well-organized events should not be reserved for people with industry connections and unlimited budgets. We believe every young adult from 25 to 50 deserves to host something they are proud of, without the overwhelm.
+        </p>
+        <p class="text-text-muted leading-relaxed">
+          Our AI platform combines smart event planning tools with a real-time vendor marketplace, so you can go from an idea to a fully planned, vendor-matched event in under 30 minutes.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div class="stat-card grad-border p-6 text-center">
+          <div class="text-3xl font-display font-semibold text-mauve mb-1">500+</div>
+          <div class="text-text-muted text-sm">Young adults served</div>
+        </div>
+        <div class="stat-card bg-sage/20 rounded-2xl p-6 border border-sage/40 text-center">
+          <div class="text-3xl font-display font-semibold text-sage-dark mb-1">200+</div>
+          <div class="text-text-muted text-sm">Verified vendors</div>
+        </div>
+        <div class="stat-card bg-sage/20 rounded-2xl p-6 border border-sage/40 text-center">
+          <div class="text-3xl font-display font-semibold text-sage-dark mb-1">30 min</div>
+          <div class="text-text-muted text-sm">Average plan time</div>
+        </div>
+        <div class="stat-card grad-border p-6 text-center">
+          <div class="text-3xl font-display font-semibold text-mauve mb-1">4.9★</div>
+          <div class="text-text-muted text-sm">User rating</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FOUNDER ══ -->
+  <section class="py-24 px-6" style="background:linear-gradient(145deg,#F8F3FC,#EDF5F0);">
+    <div class="max-w-5xl mx-auto text-center mb-16">
+      <p class="text-mauve text-sm font-semibold uppercase tracking-widest mb-3">The Founder</p>
+      <h2 class="font-display text-4xl md:text-5xl text-text-main">Meet the Mind <em class="gradient-text">Behind the Vibe</em></h2>
+    </div>
+
+    <!-- ── Main founder row ── -->
+    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-14 items-center mb-20">
+
+      <!-- Portrait photo (Photo 1) -->
+      <div class="flex justify-center">
+        <div class="founder-photo-wrap" style="width:340px;">
+          <img src="nency-portrait.jpg" alt="Nency Patel, Founder of VibePlanner"
+               style="width:340px; height:420px; object-fit:cover; object-position:35% 18%;" />
+          <!-- Decorative floating badge -->
+          <div style="position:absolute;z-index:2;bottom:-18px;right:-18px;background:white;border-radius:14px;padding:12px 16px;box-shadow:0 8px 28px rgba(185,150,200,0.22);display:flex;align-items:center;gap:9px;">
+            <i class="ph ph-sparkle" style="font-size:20px;color:#B896C8;"></i>
+            <span style="font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:#2D2B2E;">Founder &amp; CEO</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bio text -->
+      <div class="text-left">
+        <h3 class="font-display text-4xl text-text-main mb-1">Nency Patel</h3>
+        <p class="text-mauve text-sm font-medium mb-8 tracking-wide">Penn State University &nbsp;·&nbsp; Class of 2027</p>
+        <p class="text-text-muted leading-relaxed mb-5">
+          Hi, I'm Nency, an event enthusiast and the founder of VibePlanner. I started this project after spending countless hours trying to plan a milestone celebration with no vendor contacts, a real-world budget, and no idea where to start.
+        </p>
+        <p class="text-text-muted leading-relaxed mb-8">
+          VibePlanner is my answer to that problem, and to every young host who has ever felt the gap between the event they imagine and the one they can actually pull off.
+        </p>
+        <div class="flex gap-4">
+          <div class="bg-white rounded-2xl px-5 py-4 border border-lavender/40 text-center min-w-0 flex-1">
+            <div class="font-display text-2xl font-semibold text-mauve">3+</div>
+            <div class="text-text-muted text-xs mt-0.5">Years planning events</div>
+          </div>
+          <div class="bg-white rounded-2xl px-5 py-4 border border-sage/30 text-center min-w-0 flex-1">
+            <div class="font-display text-2xl font-semibold text-sage-dark">50+</div>
+            <div class="text-text-muted text-xs mt-0.5">Events organized</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Secondary row: Photo 2 + Photo 3 ── -->
+    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+
+      <!-- Photo 2 — boat / lifestyle -->
+      <div class="text-center">
+        <div class="lifestyle-photo-card h-72 mb-5">
+          <img src="nency-photo-1.jpg" alt="Nency Patel — life outside the office"
+               style="object-position:center 30%;" />
+          <div class="overlay"></div>
+          <div class="caption">
+            <p class="font-display text-lg italic" style="color:white;opacity:0.92;">"Live the vibes you plan."</p>
+          </div>
+        </div>
+        <p class="text-text-muted text-sm font-display text-lg italic">"Planning events used to feel impossible. Now it is my superpower."</p>
+      </div>
+
+      <!-- Photo 3 — boat lifestyle -->
+      <div class="text-center">
+        <div class="lifestyle-photo-card mb-5" style="height:288px;">
+          <img src="nency-boat.jpg" alt="Nency Patel — out on the water"
+               style="object-fit:cover; object-position:68% center;" />
+          <div class="overlay" style="background:linear-gradient(to top, rgba(45,43,46,0.42) 0%, transparent 45%);"></div>
+          <div class="caption">
+            <p class="font-display text-lg italic" style="color:white;opacity:0.92;">"Beautiful moments do not have an age limit."</p>
+          </div>
+        </div>
+        <p class="text-text-muted text-sm font-display text-lg italic">"Every great event starts with a great vision."</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ VALUES ══ -->
+  <section class="py-20 px-6 bg-white">
+    <div class="max-w-5xl mx-auto text-center mb-12">
+      <p class="text-mauve text-sm font-semibold uppercase tracking-widest mb-3">What Drives Us</p>
+      <h2 class="font-display text-4xl text-text-main">Our <em class="gradient-text">Core Values</em></h2>
+    </div>
+    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="value-card grad-border p-8 text-center">
+        <div class="mb-5"><i class="ph ph-hand-heart" style="font-size:36px;color:#B896C8;"></i></div>
+        <h3 class="font-semibold text-text-main mb-3">Accessibility</h3>
+        <p class="text-text-muted text-sm leading-relaxed">Great events should not require industry insiders or an unlimited budget. We make professional-grade planning tools available to everyone.</p>
+      </div>
+      <div class="value-card bg-sage/15 rounded-2xl p-8 border border-sage/30 text-center">
+        <div class="mb-5"><i class="ph ph-sparkle" style="font-size:36px;color:#7DAF9A;"></i></div>
+        <h3 class="font-semibold text-text-main mb-3">Aesthetic</h3>
+        <p class="text-text-muted text-sm leading-relaxed">We take design seriously. Every plan, poster, and recommendation is crafted to be genuinely beautiful, not just functional.</p>
+      </div>
+      <div class="value-card grad-border p-8 text-center">
+        <div class="mb-5"><i class="ph ph-handshake" style="font-size:36px;color:#B896C8;"></i></div>
+        <h3 class="font-semibold text-text-main mb-3">Trust</h3>
+        <p class="text-text-muted text-sm leading-relaxed">Every vendor in our network is verified and reviewed. We put your safety and satisfaction first, every single time.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CTA ══ -->
+  <section class="py-16 px-6 text-center" style="background:linear-gradient(145deg,#EDE4F5,#DFF0E8);">
+    <h2 class="font-display text-3xl md:text-4xl text-text-main mb-4">Ready to Plan Something <em class="gradient-text">Beautiful?</em></h2>
+    <p class="text-text-muted mb-8">Join the waitlist and be first to experience VibePlanner.</p>
+    <a href="contact.html" class="gradient-btn text-white font-semibold px-8 py-4 rounded-full shadow-md inline-flex items-center gap-2">
+      <i class="ph ph-sparkle"></i> Get Early Access
+    </a>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="border-t border-lavender/30 py-12 px-6 text-center" style="background:#F8F3FC;">
+    <a href="index.html" class="inline-flex items-center gap-2.5 mb-5">
+      <svg width="30" height="30" viewBox="0 0 36 36" fill="none">
+        <defs><linearGradient id="foot-grad" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse"><stop stop-color="#C09CD6"/><stop offset="1" stop-color="#7DB8A4"/></linearGradient></defs>
+        <rect width="36" height="36" rx="9" fill="url(#foot-grad)" fill-opacity="0.13"/>
+        <path d="M9 10 C10.5 16 14 21.5 18 27" stroke="url(#foot-grad)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+        <path d="M27 10 C25.5 16 22 21.5 18 27" stroke="url(#foot-grad)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+        <circle cx="9"  cy="10" r="2.6" fill="#C09CD6"/>
+        <circle cx="27" cy="10" r="2.6" fill="#7DB8A4"/>
+        <path d="M13 31 Q18 33.5 23 31" stroke="url(#foot-grad)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+      </svg>
+      <span class="font-display text-lg text-text-main">VibePlanner<span style="background:linear-gradient(135deg,#B896C8,#7DAF9A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">.</span></span>
+    </a>
+    <div class="flex justify-center gap-6 text-sm text-text-muted mb-5">
+      <a href="index.html"        class="hover:text-mauve transition-colors">Home</a>
+      <a href="about.html"        class="hover:text-mauve transition-colors">About</a>
+      <a href="how-it-works.html" class="hover:text-mauve transition-colors">How It Works</a>
+      <a href="contact.html"      class="hover:text-mauve transition-colors">Contact</a>
+    </div>
+    <p class="text-text-muted text-xs">© 2026 VibePlanner. Crafted with care for young adults who love a great event.</p>
+  </footer>
+
+</body>
+</html>

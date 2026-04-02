@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How It Works – VibePlanner</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: '#FAFAF6', blush: '#F2E6F0', lavender: '#D9C8E8',
+            mauve: '#B896C8', sage: '#AECDBF', 'sage-dark': '#7DAF9A',
+            'text-main': '#2D2B2E', 'text-muted': '#7A7580',
+          },
+          fontFamily: {
+            sans: ['DM Sans', 'system-ui', 'sans-serif'],
+            display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    body { background-color: #FAFAF6; color: #2D2B2E; }
+    .font-display { letter-spacing: 0.01em; }
+    h1, h2, h3 { font-feature-settings: 'liga', 'kern'; }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #B896C8 20%, #7DAF9A 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .gradient-btn { background: linear-gradient(135deg, #B896C8, #9BB8D4); transition: opacity 0.2s ease; }
+    .gradient-btn:hover { opacity: 0.88; }
+    .nav-link { position: relative; }
+    .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1.5px; background: #B896C8; transition: width 0.25s ease; }
+    .nav-link:hover::after { width: 100%; }
+
+    /* Step connector line — anchored to center of the 56px circle (left: 28px) */
+    .step-line { position: relative; }
+    .step-line::before {
+      content: '';
+      position: absolute;
+      left: 28px;
+      top: 58px;
+      bottom: -64px;
+      width: 2px;
+      background: linear-gradient(to bottom, #D9C8E8, #AECDBF);
+    }
+    .step-line:last-child::before { display: none; }
+
+    /* FAQ accordion */
+    .faq-item { border-bottom: 1px solid #E8DCF0; }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .faq-item.open .faq-answer { max-height: 200px; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-icon { transition: transform 0.25s ease; }
+
+    .grad-border { position: relative; background: #fff; border-radius: 18px; }
+    .grad-border::before {
+      content: ''; position: absolute; inset: 0; border-radius: 18px; padding: 1.5px;
+      background: linear-gradient(135deg, #D9C8E8, #AECDBF);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+    }
+
+    .event-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .event-card:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(180,150,200,0.15); }
+  </style>
+</head>
+
+<body class="font-sans">
+
+  <!-- ══ NAVBAR ══ -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-lavender/40">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2.5">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <defs><linearGradient id="nav-grad" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse"><stop stop-color="#C09CD6"/><stop offset="1" stop-color="#7DB8A4"/></linearGradient></defs>
+          <rect width="36" height="36" rx="9" fill="url(#nav-grad)" fill-opacity="0.13"/>
+          <path d="M9 10 C10.5 16 14 21.5 18 27" stroke="url(#nav-grad)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+          <path d="M27 10 C25.5 16 22 21.5 18 27" stroke="url(#nav-grad)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+          <circle cx="9"  cy="10" r="2.6" fill="#C09CD6"/>
+          <circle cx="27" cy="10" r="2.6" fill="#7DB8A4"/>
+          <path d="M13 31 Q18 33.5 23 31" stroke="url(#nav-grad)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        </svg>
+        <span class="font-display text-xl text-text-main tracking-tight">VibePlanner<span style="background:linear-gradient(135deg,#B896C8,#7DAF9A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">.</span></span>
+      </a>
+      <div class="flex items-center gap-4 md:gap-8 text-sm font-medium text-text-muted">
+        <a href="index.html"        class="nav-link hover:text-text-main transition-colors">Home</a>
+        <a href="about.html"        class="nav-link hover:text-text-main transition-colors">About</a>
+        <a href="how-it-works.html" class="nav-link text-mauve font-semibold">How It Works</a>
+        <a href="contact.html"      class="nav-link hover:text-text-main transition-colors">Contact</a>
+      </div>
+      <a href="contact.html" class="gradient-btn text-white text-sm font-medium px-5 py-2.5 rounded-full shadow-sm">Get Early Access</a>
+    </div>
+  </nav>
+
+  <!-- ══ PAGE HEADER ══ -->
+  <section class="pt-32 pb-16 px-6 text-center" style="background:linear-gradient(145deg,#EDE4F5,#DFF0E8);">
+    <p class="text-mauve text-sm font-semibold uppercase tracking-widest mb-3">The Process</p>
+    <h1 class="font-display text-5xl md:text-6xl text-text-main mb-5">How It <em class="gradient-text">Works</em></h1>
+    <p class="text-text-muted text-lg max-w-2xl mx-auto leading-relaxed">
+      From idea to fully planned event in five simple steps. No experience needed, no vendor contacts required.
+    </p>
+  </section>
+
+  <!-- ══ STEPS ══ -->
+  <section class="py-24 px-6 bg-white">
+    <div class="max-w-3xl mx-auto">
+
+      <!-- Step 1 -->
+      <div class="step-line flex gap-8 mb-16 items-start">
+        <div class="flex-shrink-0 flex flex-col items-center">
+          <div class="w-14 h-14 rounded-full bg-blush border-2 border-lavender flex items-center justify-center font-display text-xl font-semibold text-mauve shadow-sm">1</div>
+        </div>
+        <div class="pt-2">
+          <div class="inline-block bg-lavender/30 text-mauve text-xs font-semibold px-3 py-1 rounded-full mb-3">Tell Us Your Vision</div>
+          <h3 class="font-display text-2xl text-text-main mb-3">Input Your Event Details</h3>
+          <p class="text-text-muted leading-relaxed">
+            Start by telling VibePlanner what you are envisioning. Choose your event type, set your budget range, guest count, and describe your dream vibe. Minimal chic, garden party, urban luxe, or anything in between.
+          </p>
+          <div class="mt-5 bg-cream rounded-xl p-4 border border-lavender/30 text-sm text-text-muted">
+            <span class="font-medium text-mauve">Example:</span> "Birthday dinner for 20 guests, $300 budget, aesthetic minimalist vibe, rooftop setting."
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step-line flex gap-8 mb-16 items-start">
+        <div class="flex-shrink-0 flex flex-col items-center">
+          <div class="w-14 h-14 rounded-full bg-sage/30 border-2 border-sage flex items-center justify-center font-display text-xl font-semibold text-sage-dark shadow-sm">2</div>
+        </div>
+        <div class="pt-2">
+          <div class="inline-flex items-center gap-1.5 bg-sage/30 text-sage-dark text-xs font-semibold px-3 py-1 rounded-full mb-3">
+            <i class="ph ph-sparkle" style="font-size:13px;"></i> AI Magic
+          </div>
+          <h3 class="font-display text-2xl text-text-main mb-3">Get Your Personalized Event Plan</h3>
+          <p class="text-text-muted leading-relaxed">
+            Our AI instantly generates a complete, customized event plan. This includes a curated theme with color palette, a detailed layout, a line-by-line budget breakdown, and a full task timeline. All tailored to your specific inputs.
+          </p>
+          <div class="mt-5 grid grid-cols-2 gap-3 text-xs">
+            <div class="bg-blush/50 rounded-lg p-3 border border-lavender/20 flex items-center gap-2"><i class="ph ph-palette" style="color:#B896C8;font-size:14px;"></i> Theme and color palette</div>
+            <div class="bg-blush/50 rounded-lg p-3 border border-lavender/20 flex items-center gap-2"><i class="ph ph-ruler" style="color:#B896C8;font-size:14px;"></i> Space layout suggestions</div>
+            <div class="bg-blush/50 rounded-lg p-3 border border-lavender/20 flex items-center gap-2"><i class="ph ph-wallet" style="color:#B896C8;font-size:14px;"></i> Budget line breakdown</div>
+            <div class="bg-blush/50 rounded-lg p-3 border border-lavender/20 flex items-center gap-2"><i class="ph ph-calendar-check" style="color:#B896C8;font-size:14px;"></i> Task timeline</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step-line flex gap-8 mb-16 items-start">
+        <div class="flex-shrink-0 flex flex-col items-center">
+          <div class="w-14 h-14 rounded-full bg-blush border-2 border-lavender flex items-center justify-center font-display text-xl font-semibold text-mauve shadow-sm">3</div>
+        </div>
+        <div class="pt-2">
+          <div class="inline-block bg-lavender/30 text-mauve text-xs font-semibold px-3 py-1 rounded-full mb-3">Live Matching</div>
+          <h3 class="font-display text-2xl text-text-main mb-3">Match with Verified Local Vendors</h3>
+          <p class="text-text-muted leading-relaxed">
+            Our Live Vendor Matching Engine scans our verified vendor network in real time, filtering by your location, budget, availability, and aesthetic. You will see a curated list of photographers, caterers, decorators, DJs, and more, each with reviews, pricing, and portfolio samples.
+          </p>
+          <div class="mt-5 bg-sage/20 rounded-xl p-4 border border-sage/30 text-sm text-text-muted flex items-start gap-2">
+            <i class="ph ph-lightning" style="color:#7DAF9A;font-size:16px;flex-shrink:0;margin-top:1px;"></i>
+            <span>Vendors are matched live based on current availability. No outdated listings, no guessing.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="step-line flex gap-8 mb-16 items-start">
+        <div class="flex-shrink-0 flex flex-col items-center">
+          <div class="w-14 h-14 rounded-full bg-sage/30 border-2 border-sage flex items-center justify-center font-display text-xl font-semibold text-sage-dark shadow-sm">4</div>
+        </div>
+        <div class="pt-2">
+          <div class="inline-block bg-sage/30 text-sage-dark text-xs font-semibold px-3 py-1 rounded-full mb-3">Content Creator</div>
+          <h3 class="font-display text-2xl text-text-main mb-3">Generate Your Event Content</h3>
+          <p class="text-text-muted leading-relaxed">
+            Let our AI handle the creative work. Generate a stunning custom invite, on-brand social captions ready to post, and a shareable event poster. All matching your chosen aesthetic, produced in seconds.
+          </p>
+          <div class="mt-5 flex flex-wrap gap-2">
+            <span class="bg-lavender/30 text-mauve text-xs px-3 py-1.5 rounded-full font-medium flex items-center gap-1.5"><i class="ph ph-envelope-simple" style="font-size:12px;"></i> Custom Invitations</span>
+            <span class="bg-lavender/30 text-mauve text-xs px-3 py-1.5 rounded-full font-medium flex items-center gap-1.5"><i class="ph ph-device-mobile-camera" style="font-size:12px;"></i> Social Captions</span>
+            <span class="bg-lavender/30 text-mauve text-xs px-3 py-1.5 rounded-full font-medium flex items-center gap-1.5"><i class="ph ph-image" style="font-size:12px;"></i> Event Posters</span>
+            <span class="bg-lavender/30 text-mauve text-xs px-3 py-1.5 rounded-full font-medium flex items-center gap-1.5"><i class="ph ph-heart" style="font-size:12px;"></i> Save the Dates</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 5 — last-child, so connector line is hidden -->
+      <div class="step-line flex gap-8 mb-8 items-start">
+        <div class="flex-shrink-0 flex flex-col items-center">
+          <div class="w-14 h-14 rounded-full bg-blush border-2 border-lavender flex items-center justify-center font-display text-xl font-semibold text-mauve shadow-sm">5</div>
+        </div>
+        <div class="pt-2">
+          <div class="inline-block bg-lavender/30 text-mauve text-xs font-semibold px-3 py-1 rounded-full mb-3">Final Step</div>
+          <h3 class="font-display text-2xl text-text-main mb-3">Preview and Host Your Event</h3>
+          <p class="text-text-muted leading-relaxed">
+            Before the big day, use our Event Preview feature to visualize your complete setup. See the layout, color scheme, and full flow come together in a visual mockup. Make tweaks, confirm your vendors, and go host the most memorable event of the year.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ EVENT TYPES ══ -->
+  <section class="py-20 px-6" style="background:linear-gradient(145deg,#F2E6F0,#EDE4F5);">
+    <div class="max-w-5xl mx-auto text-center mb-12">
+      <p class="text-mauve text-sm font-semibold uppercase tracking-widest mb-3">What We Plan</p>
+      <h2 class="font-display text-3xl md:text-4xl text-text-main">Works for Any Event <em class="gradient-text">You Can Dream Up</em></h2>
+    </div>
+    <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-5">
+      <div class="event-card bg-white rounded-2xl p-6 text-center border border-lavender/30 shadow-sm">
+        <div class="mb-3"><i class="ph ph-cake" style="font-size:30px;color:#B896C8;"></i></div>
+        <div class="font-medium text-text-main text-sm">Birthday Parties</div>
+      </div>
+      <div class="event-card bg-white rounded-2xl p-6 text-center border border-lavender/30 shadow-sm">
+        <div class="mb-3"><i class="ph ph-graduation-cap" style="font-size:30px;color:#7DAF9A;"></i></div>
+        <div class="font-medium text-text-main text-sm">Graduation Parties</div>
+      </div>
+      <div class="event-card bg-white rounded-2xl p-6 text-center border border-lavender/30 shadow-sm">
+        <div class="mb-3"><i class="ph ph-wine" style="font-size:30px;color:#B896C8;"></i></div>
+        <div class="font-medium text-text-main text-sm">Themed Dinners</div>
+      </div>
+      <div class="event-card bg-white rounded-2xl p-6 text-center border border-lavender/30 shadow-sm">
+        <div class="mb-3"><i class="ph ph-flower" style="font-size:30px;color:#7DAF9A;"></i></div>
+        <div class="font-medium text-text-main text-sm">Brunch Gatherings</div>
+      </div>
+      <div class="event-card bg-white rounded-2xl p-6 text-center border border-lavender/30 shadow-sm">
+        <div class="mb-3"><i class="ph ph-microphone" style="font-size:30px;color:#B896C8;"></i></div>
+        <div class="font-medium text-text-main text-sm">Social Mixers</div>
+      </div>
+      <div class="event-card bg-white rounded-2xl p-6 text-center border border-lavender/30 shadow-sm">
+        <div class="mb-3"><i class="ph ph-house" style="font-size:30px;color:#7DAF9A;"></i></div>
+        <div class="font-medium text-text-main text-sm">Housewarming</div>
+      </div>
+      <div class="event-card bg-white rounded-2xl p-6 text-center border border-lavender/30 shadow-sm">
+        <div class="mb-3"><i class="ph ph-heart" style="font-size:30px;color:#B896C8;"></i></div>
+        <div class="font-medium text-text-main text-sm">Date Nights</div>
+      </div>
+      <div class="event-card bg-white rounded-2xl p-6 text-center border border-lavender/30 shadow-sm">
+        <div class="mb-3"><i class="ph ph-confetti" style="font-size:30px;color:#7DAF9A;"></i></div>
+        <div class="font-medium text-text-main text-sm">Any Occasion</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FAQ ══ -->
+  <section class="py-20 px-6 bg-white">
+    <div class="max-w-2xl mx-auto">
+      <div class="text-center mb-12">
+        <p class="text-mauve text-sm font-semibold uppercase tracking-widest mb-3">Got Questions?</p>
+        <h2 class="font-display text-3xl md:text-4xl text-text-main">Frequently <em class="gradient-text">Asked Questions</em></h2>
+      </div>
+
+      <div class="faq-item py-5 cursor-pointer" onclick="toggleFAQ(this)">
+        <div class="flex items-center justify-between">
+          <h4 class="font-medium text-text-main">Is VibePlanner free to use?</h4>
+          <span class="faq-icon text-mauve text-2xl font-light leading-none">+</span>
+        </div>
+        <div class="faq-answer">
+          <p class="text-text-muted text-sm mt-3 leading-relaxed">Yes. VibePlanner has a free tier that gives you full access to event planning and AI-generated content. Vendor matching and premium features are available on our paid plan, designed to be accessible for young adults at every stage of life.</p>
+        </div>
+      </div>
+
+      <div class="faq-item py-5 cursor-pointer" onclick="toggleFAQ(this)">
+        <div class="flex items-center justify-between">
+          <h4 class="font-medium text-text-main">How are vendors verified?</h4>
+          <span class="faq-icon text-mauve text-2xl font-light leading-none">+</span>
+        </div>
+        <div class="faq-answer">
+          <p class="text-text-muted text-sm mt-3 leading-relaxed">Every vendor in our network goes through a manual verification process. We check business credentials, review portfolios, and collect verified user reviews before anyone is listed on our platform.</p>
+        </div>
+      </div>
+
+      <div class="faq-item py-5 cursor-pointer" onclick="toggleFAQ(this)">
+        <div class="flex items-center justify-between">
+          <h4 class="font-medium text-text-main">What if my vibe is hard to describe?</h4>
+          <span class="faq-icon text-mauve text-2xl font-light leading-none">+</span>
+        </div>
+        <div class="faq-answer">
+          <p class="text-text-muted text-sm mt-3 leading-relaxed">That is exactly what our AI is for. You can use a few descriptive words, mood board references, or even a color you love. Our AI is trained to interpret vague aesthetic descriptions and translate them into concrete event plans.</p>
+        </div>
+      </div>
+
+      <div class="faq-item py-5 cursor-pointer" onclick="toggleFAQ(this)">
+        <div class="flex items-center justify-between">
+          <h4 class="font-medium text-text-main">Can I use this outside my local area?</h4>
+          <span class="faq-icon text-mauve text-2xl font-light leading-none">+</span>
+        </div>
+        <div class="faq-answer">
+          <p class="text-text-muted text-sm mt-3 leading-relaxed">Absolutely. VibePlanner works anywhere. The planning tools are location-independent, and our vendor network is expanding to cities across the US. Enter your location and we will show you what is available nearby.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CTA ══ -->
+  <section class="py-16 px-6 text-center" style="background:linear-gradient(145deg,#EDE4F5,#DFF0E8);">
+    <h2 class="font-display text-3xl md:text-4xl text-text-main mb-4">Ready to Start <em class="gradient-text">Planning?</em></h2>
+    <p class="text-text-muted mb-8">Join the waitlist and we will walk you through your first event plan together.</p>
+    <a href="contact.html" class="gradient-btn text-white font-semibold px-8 py-4 rounded-full shadow-md inline-flex items-center gap-2">
+      <i class="ph ph-sparkle"></i> Join the Waitlist
+    </a>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="border-t border-lavender/30 py-12 px-6 text-center" style="background:#F8F3FC;">
+    <a href="index.html" class="inline-flex items-center gap-2.5 mb-5">
+      <svg width="30" height="30" viewBox="0 0 36 36" fill="none">
+        <defs><linearGradient id="foot-grad" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse"><stop stop-color="#C09CD6"/><stop offset="1" stop-color="#7DB8A4"/></linearGradient></defs>
+        <rect width="36" height="36" rx="9" fill="url(#foot-grad)" fill-opacity="0.13"/>
+        <path d="M9 10 C10.5 16 14 21.5 18 27" stroke="url(#foot-grad)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+        <path d="M27 10 C25.5 16 22 21.5 18 27" stroke="url(#foot-grad)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+        <circle cx="9"  cy="10" r="2.6" fill="#C09CD6"/>
+        <circle cx="27" cy="10" r="2.6" fill="#7DB8A4"/>
+        <path d="M13 31 Q18 33.5 23 31" stroke="url(#foot-grad)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+      </svg>
+      <span class="font-display text-lg text-text-main">VibePlanner<span style="background:linear-gradient(135deg,#B896C8,#7DAF9A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">.</span></span>
+    </a>
+    <div class="flex justify-center gap-6 text-sm text-text-muted mb-5">
+      <a href="index.html"        class="hover:text-mauve transition-colors">Home</a>
+      <a href="about.html"        class="hover:text-mauve transition-colors">About</a>
+      <a href="how-it-works.html" class="hover:text-mauve transition-colors">How It Works</a>
+      <a href="contact.html"      class="hover:text-mauve transition-colors">Contact</a>
+    </div>
+    <p class="text-text-muted text-xs">© 2026 VibePlanner. Crafted with care for young adults who love a great event.</p>
+  </footer>
+
+  <script>
+    function toggleFAQ(el) { el.classList.toggle('open'); }
+  </script>
+</body>
+</html>
